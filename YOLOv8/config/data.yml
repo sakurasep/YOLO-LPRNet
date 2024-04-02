@@ -1,0 +1,9 @@
+path:  /Users/sakurasep/Sakurasep/Code/Python/YOLO-LPRNet/CCPD2020/ccpd_green/Green # dataset root dir
+train: train/images # train images (relative to 'path') 128 images
+val: val/images # val images (relative to 'path') 128 images
+test: test/images  # test images (optional)
+
+# Classes
+names:
+  0: blue_base
+
