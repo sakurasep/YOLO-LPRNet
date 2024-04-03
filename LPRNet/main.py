@@ -59,7 +59,8 @@ def predict_images(image_folder, model):
 
 if __name__ == "__main__":
     # 指定图片文件夹路径
-    image_folder = '../CCPD2020/ccpd_green/val_lpr'
+    # image_folder = '../CCPD2020/ccpd_green/val_lpr'
+    image_folder = '../YOLOv8/images_lpr'
     # 加载模型
     model_path = "./LPRNet_Pytorch/Final_LPRNet_model.pth"
     lprnet = load_model(model_path)

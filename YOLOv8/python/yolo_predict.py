@@ -5,7 +5,8 @@ from ultralytics import YOLO
 model = YOLO("../train/best.pt")
 
 # 指定图像文件夹路径
-image_folder = "../../CCPD2020/ccpd_green/val"
+# image_folder = "../../CCPD2020/ccpd_green/val"
+image_folder = "../images"
 
 # 获取图像文件夹中的所有图像文件列表
 image_files = [os.path.join(image_folder, file) for file in os.listdir(image_folder) if file.endswith(('.jpg', '.jpeg', '.png'))]

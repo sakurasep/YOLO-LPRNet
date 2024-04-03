@@ -1,12 +1,19 @@
 import os
 from PIL import Image
 
+# # 图片和标注数据所在的文件夹路径
+# image_folder = "../../CCPD2020/ccpd_green/val"
+# annotation_folder = "./runs/detect/predict3/labels"
+#
+# # 输出文件夹路径
+# output_folder = "../../CCPD2020/ccpd_green/val_lpr"
+
 # 图片和标注数据所在的文件夹路径
-image_folder = "../../CCPD2020/ccpd_green/val"
-annotation_folder = "./runs/detect/predict3/labels"
+image_folder = "../images"
+annotation_folder = "./runs/detect/predict4/labels"
 
 # 输出文件夹路径
-output_folder = "../../CCPD2020/ccpd_green/val_lpr"
+output_folder = "../images_lpr"
 
 # 创建保存切割后图片的文件夹
 if not os.path.exists(output_folder):
