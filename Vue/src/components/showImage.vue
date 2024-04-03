@@ -8,6 +8,10 @@ export default {
     }
   },
   methods: {
+    openFileInput() {
+      // 打开文件选择对话框
+      this.$refs.fileInput.click();
+    },
     onFileChange(event) {
       const file = event.target.files[0];
       this.imageUrl = URL.createObjectURL(file);
@@ -34,7 +38,8 @@ export default {
 
 <template>
   <div class="container">
-    <input type="file" @change="onFileChange">
+    <el-button type="primary" @click="openFileInput">选择文件</el-button>
+    <input ref="fileInput" type="file" class="hidden" @change="onFileChange">
   </div>
   <div v-if="imageUrl" class="image-container">
     <img :src="imageUrl" alt="Selected Image" class="image-preview">
@@ -45,6 +50,10 @@ export default {
 .container {
   display: flex;
   justify-content: center;
+}
+
+.hidden {
+  display: none;
 }
 
 .image-container {

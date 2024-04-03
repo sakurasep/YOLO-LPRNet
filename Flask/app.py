@@ -20,9 +20,13 @@ CORS(app)
 
 # 图片预处理
 def transform(img):
+    # 将图像数据类型转换为浮点型
     img = img.astype('float32')
+    # 减去127.5以对图像进行归一化，将像素值范围缩放到[-1, 1]之间
     img -= 127.5
+    # 乘以0.0078125以进一步缩放图像像素值，确保在较小范围内
     img *= 0.0078125
+    # 调整图像的维度顺序，将通道维度置于第一维度，以匹配模型的输入格式
     img = np.transpose(img, (2, 0, 1))
     return img
 
@@ -150,9 +154,17 @@ def predict_image(image_path):
     model.predict(image_path, save_txt=True, imgsz=320, conf=0.5, device='mps')
 
 
-# @app.route('/predict_plate', methods=['POST'])
-# def get_result():
-#     return "hello world"
+# 主要逻辑
+def main(filename):
+    # 调用预测函数
+    predict_image(filename)
+    # 获取不包含拓展名的文件名
+    file_name_without_extension = os.path.splitext(os.path.basename(filename))[0]
+    # 构造新的文件名（扩展名改为.txt）
+    new_filename_txt = file_name_without_extension + ".txt"
+    # 切割图片
+    annotation_path = "./runs/detect/predict/labels/" + new_filename_txt
+    crop_single_image(filename, annotation_path)
 
 
 @app.route('/upload', methods=['POST'])
@@ -166,18 +178,14 @@ def upload_image():
 
     filename = os.path.join(UPLOAD_FOLDER, file.filename)
     file.save(filename)
-
-    # 将文件路径打印到控制台
-    predict_image(filename)
-    # 提取文件名（不包含路径和扩展名）
-    file_name_without_extension = os.path.splitext(os.path.basename(filename))[0]
-    # 构造新的文件名（扩展名改为.txt）
-    new_filename_txt = file_name_without_extension + ".txt"
-    annotation_path = "./runs/detect/predict/labels/" + new_filename_txt
-    crop_single_image(filename, annotation_path)
     print("Image uploaded successfully. File path:", filename)
+
+    # 调用main函数处理上传的文件
+    main(filename)
+
+    # 返回成功的响应
     return jsonify({'success': 'Image uploaded successfully', 'file_path': filename})
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
